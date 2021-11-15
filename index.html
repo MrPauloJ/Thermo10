@@ -1,0 +1,664 @@
+﻿<!DOCTYPE HTML>
+<html lang="pt-br">
+<head>
+<link rel="shortcut icon" href="Imgs/Icon/THERMO10.ico" type="image/x-icon" />;
+<meta charset="utf-8">
+<meta name="description" content="É um jogo digital elaborado com finalidade de auxiliar os professores e
+os alunos, principalmente da educação básica, de forma lúdica e prazerosa nos
+processos de ensino-aprendizagem em sala de aula, dos conceitos
+relacionados à Termoquímica.">
+
+<!--<link rel="stylesheet" type="text/css" href="Css/LudoStyle.css" media="screen and (min-width: 1023px)" >-->
+<!--<link rel="stylesheet" href="Css/LudoStylePhone.css" media="screen and (max-width: 1080px)/> <!--and (orientation: landscape)" />-->
+<!--<meta name="viewport" content="width=100%, initial-scale=1">-->
+<title>Thermo10</title>
+
+<!--script type="text/javascript" src="fast.js"></script><!--Trocar # pelo link da versão do jogo -> fast.js ou full.js  -->
+<script type="text/javascript">
+
+var celular, width, height;
+
+function verificarCelular(){
+	width = screen.width;
+	height = screen.height;
+	if(width<=1080 && height<=2280){
+	celular=true;
+	/*
+	screen.orientation.lock("landscape")
+	.then(function() {
+		/*alert('Locked');*/
+	/*})
+	.catch(function(error) {
+		alert(error);
+	});
+	*/
+	}else{
+	celular=false;}
+}
+verificarCelular();
+// Get HTML head element 
+var head = document.getElementsByTagName('HTML')[0];  
+// Create new link Element 
+var link = document.createElement('link'); 
+// set the attributes for link element  
+link.rel = 'stylesheet';  
+link.type = 'text/css'; 
+if(navigator.userAgent.indexOf('Android')!=-1){var so = "Android"; link.href = 'Css/LudoStylePhone.css'; celular=true;}
+else if(navigator.userAgent.indexOf('phonegap')!=-1){var so = "phonegap"; link.href = 'Css/LudoStylePhone.css'; celular=true;}
+else if(navigator.userAgent.indexOf('Linux') != -1){ var so = "Linux"; link.href = 'Css/LudoStylePhone.css'; celular=true;}
+else if(navigator.userAgent.indexOf('Windows')!=-1){var so = "Windows"; link.href = 'Css/LudoStyle.css';}         
+// Append link element to HTML head 
+head.appendChild(link);
+		
+
+function Now(){
+	document.getElementById("Dado").style.visibility = "hidden";
+	document.getElementById("DicaCartao").style.visibility = "hidden";
+	document.getElementById("thermo").style.visibility = "hidden";
+	document.getElementById("BtA").style.visibility = "hidden";
+	document.getElementById("BtB").style.visibility = "hidden";
+	document.getElementById("BtC").style.visibility = "hidden";
+	document.getElementById("BtD").style.visibility = "hidden";
+	document.getElementById("regras").style.visibility = "hidden"; 
+	document.getElementById("Cartao").style.visibility = "hidden";
+	document.getElementById("Dicas").style.visibility = "hidden";
+	document.getElementById("Quitanda").style.visibility = "hidden";
+	document.getElementById("fique_dentro").style.visibility = "hidden";
+	document.getElementById("Exercicio").style.visibility = "hidden";
+	document.getElementById("Pieces").style.visibility = "hidden";
+	document.getElementById("pieceOne").style.visibility = "hidden";
+	document.getElementById("pieceTwo").style.visibility = "hidden";
+	document.getElementById("pieceThree").style.visibility = "hidden";
+	document.getElementById("Msg").style.visibility = "hidden";
+	document.getElementById("Restart").style.visibility = "hidden";
+	document.getElementById("MensagemVencedor").style.visibility = "hidden";
+	document.getElementById("MsgVencedor").style.visibility = "hidden";
+	document.getElementById("Venceu").style.visibility = "hidden";
+	document.getElementById("X1").style.visibility = "hidden";
+	document.getElementById("X3").style.visibility = "hidden";
+	document.getElementById("X4").style.visibility = "hidden";
+	document.getElementById("X5").style.visibility = "hidden";
+	document.getElementById("X2").style.visibility = "hidden";
+	document.getElementById("X6").style.visibility = "hidden";
+	document.getElementById("X7").style.visibility = "hidden";
+	document.getElementById("X8").style.visibility = "hidden";
+	document.getElementById("X9").style.visibility = "hidden";
+	document.getElementById("X10").style.visibility = "hidden";
+	document.getElementById("X11").style.visibility = "hidden";
+	document.getElementById("X12").style.visibility = "hidden";
+	document.getElementById("BtA").disabled = true;
+	document.getElementById("BtB").disabled = true;
+	document.getElementById("BtC").disabled = true;
+	document.getElementById("BtD").disabled = true;
+	document.getElementById("Dado").disabled = false;
+	document.getElementById("thermo10").disabled = true;
+	document.getElementById("Instrucao").disabled = true;
+	document.getElementById("AndarPeca").disabled = true;
+	document.getElementById("pieceOne").disabled = true;
+	document.getElementById("pieceTwo").disabled = true;
+	document.getElementById("pieceThree").disabled = true;
+}
+
+function incluiScriptExterno(){
+var check = document.getElementById("versao"); 
+
+if (check.checked){ 
+//alert("CheckBox Marcado");
+incluir("Js/fast.js");
+}else{
+//alert("CheckBox não Marcado");
+incluir("Js/full.js");
+}	
+}
+
+function incluir(file_script){
+	var arq_js 		= document.createElement("script"); //criando um elemento script
+		arq_js.type = "text/javascript";//informando o type como text/javacript
+		arq_js.src 	= file_script;//inserindo um src com o valor do parâmetro file_script
+	document.body.appendChild(arq_js);//inserindo o elemento(arq_js) como filho do  BODY
+}
+
+
+</script>
+
+
+</head>
+<body onload = "Now();incluiScriptExterno();" id="body">
+
+<!-- audios-->
+<audio id="AudClick" src="audios\Click_1.mp3"></audio>
+<audio id="AudClick2" src="audios\Click_2.mp3"></audio>
+<audio id="AudD" src="audios\Dados_Rolando.mp3"></audio>
+<audio id="AudFin" src="audios\Finalizacao.mp3"></audio>
+<audio id="AudFinal" src="audios\Finalizacao_Todos.mp3"></audio>
+<audio id="RC" src="audios\Resposta_Certa.mp3"></audio>
+<audio id="RE" src="audios\Resposta_Errada.mp3"></audio>
+<audio id="AudVB" src="audios\Retorno_do_Peao.mp3"></audio>
+
+<!-- Nome dos jogadores-->
+
+<section id="PlayerName">
+<img style="border-radius:8px;position:absolute;left:15%;min-height:84px; min-width:90px; height:15%;width:auto;" src="Imgs/Icon/THERMO10.png"/>
+<p style="margin-left:35%; font-size:250%; margin-top:10px;">Thermo10</p>
+<p style="margin-left:35%; margin-top:-45px;">(Jogo Digital Termoquímico)</p><br>
+
+<p style="font-family:arial;margin-bottom:-40px;font-size:108%; margin-left:80px;">Identifique os jogadores (opcional):</p><br>
+<span style="font-size:125%; margin-left:80px;">J O G A D O R &ensp; 1 &ensp;</span>
+<input type="text" id="Jg1" maxlength='20' placeholder="máximo 20 caracteres"> <br>
+<span style="font-size:125%; margin-left:80px;">J O G A D O R &ensp; 2 &ensp;</span>
+<input type="text" id="Jg2" maxlength='20' placeholder="máximo 20 caracteres">	<br>
+<span style="font-size:125%; margin-left:80px;">J O G A D O R &ensp; 3 &ensp;</span>
+<input type="text" id="Jg3" maxlength='20' placeholder="máximo 20 caracteres"> <br>
+<span style="font-size:125%; margin-left:80px;">J O G A D O R &ensp; 4 &ensp;</span>
+<input type="text" id="Jg4" maxlength='20' placeholder="máximo 20 caracteres"> <br> <br>
+<strong><p style="font-size:100%;margin-left:20px;"> Para jogar a VERSÃO COMPLETA clique no botão iniciar ou selecione VERSÃO RÁPIDA e depois clique em iniciar.</p></strong>
+
+		<b style="position:relative;top:5px;left:50px;font-size:108%;">Jogar versão rápida</b>
+		<input style="width:20px;height:20px;position:relative;left:55px;top:10px;" type="checkbox" name="versao" id="versao" onclick="incluiScriptExterno()"> 
+		<br><br>
+
+
+<!--p style="margin-left:100px;">OBS.: O nome pode conter até 20 caracteres.</p-->
+&ensp; <input type="submit" id="Submit" onclick="Iniciar();" value="I N I C I A R"> <br>
+</section>
+
+<!-- Escolha de peças -->
+
+<section id="Pieces" class="Rotation">
+
+<input type=submit value="S A I R" id="SairPeca" class="Rotation" onclick="Saida(1)">
+<input type=submit value="A N D A R" id="AndarPeca" class="Rotation" onclick="Saida(2)">
+	
+<input type=image src="Imgs/peao/Black/1.png" id="pieceOne" class="Rotation" onclick="Escolha(1)">
+<input type=image src="Imgs/peao/Black/2.png" id="pieceTwo" class="Rotation" onclick="Escolha(2)">
+<input type=Image src="Imgs/peao/Black/3.png" id="pieceThree" class="Rotation" onclick="Escolha(3)">
+</section>
+
+<!-- Mensagem para os jogadores-->
+<section id="Msg">
+<h1 style="font-size:150%; margin-top:5px; text-align:center;"> J O G O &ensp; I N I C I A D O</h1>
+<h2 style="font-size:130%; text-align:center;margin-top:5px;"> O primeiro jogador a jogar será:</h2> <p id="NomeJg" style="font-size:200%; text-align:center;margin-top:5px;">X</p>
+</section>
+
+<!-- Cartão de pergunta-->
+<section id="DicaCartao" class="Rotation">
+<h1 onclick="RemoveDicaP()">Fechar</h1>
+<p id="dicasPergunta" style="font-size:108%;"></p>
+</section>
+
+<section id="Cartao" class="Rotation">
+<div id="selfPerguntas" style="display:block; width:100%; height:auto;">
+	<p id="Pergunta"> &ensp; &ensp; &ensp; </p><br>
+	<p id="A" style="font-size:125%;position:relative; margin-bottom:1%; "> </p>
+	<p id="B" style="font-size:125%;position:relative; margin-bottom:1%; "> </p>
+	<p id="C" style="font-size:125%;position:relative; margin-bottom:1%; "> </p>
+	<p id="D" style="font-size:125%;position:relative; margin-bottom:1%; "> </p>
+</div>
+<hr width="100%" color="black" >
+<div id="infoPerguntas" style="display:block; width:100%; height:auto;">
+	<p id="temporizador" style="display:inline-block; position:relative;"> Time </p>
+	<p id="Conselho" style="display:inline-block; position:relative;">Clique em um dos botões abaixo para responder a pergunta.</p>
+	<img src="Imgs/amp.gif" style="display:inline-block;float:right; max-height:; max-width:65%; height:15%; width:10%; position:relative."/>
+	<input type="submit" style="display:inline-block;font-size:110%;position:relative;padding:0.5%; left:5%;" id="DicaP" onclick="AbrirDicaP()" value="D I C A">
+</div>
+</section>
+
+<!-- Cartão de dicas -->
+
+<section id="Dicas" class="Rotation">
+<p style="text-align:center; font-size:183%;"   >T H E R M O 1 0 &ensp; -  &ensp; D I C A</p>
+<p id="Diquinha" style="text-align:center;font-size:133%;"></p>
+&ensp; <input type="submit" id="Confirm" onclick="Confirm()" value="C O N F I R M A R"> <br><br><br>
+</section>
+
+<!-- Quitanda -->
+<div id="fique_dentro" class="Rotation">
+<center><h1>Fique por dentro</h1></center>
+Para calcularmos quanto de energia um alimento pode fornecer
+quando é digerido, devemos saber a sua composição em massa
+de: <span style="color:green;">proteínas</span>, <span style="color:blue;">carboidratos</span> e <span style="color:red;">lipídeos</span>; para podermos
+determinar o seu valor energético. Então: E alimento = <span style="color:green;">E proteínas</span> +
+<span style="color:blue;">E carboidratos</span> + <span style="color:red;">E lipídeos</span>
+<br>
+EXEMPLO: Sendo a amostra do alimento de 100 gramas com a seguinte:
+<table border="1px">
+<tr>
+	<td>Composição</td>
+	<td>Porcentagem</td>
+	<td>Valor em massa</td>
+	<td>Valor energético (KJ) por grama</td>
+</tr>
+
+<tr>
+	<td><span style="color:green;">Proteína</span></td>
+	<td><span style="color:green;">15%</span></td>
+	<td><span style="color:green;">15 g</span></td>
+	<td><span style="color:green;">16,7</span></td>
+</tr>
+
+<tr>
+	<td><span style="color:blue;">Carboidrato</span></td>
+	<td><span style="color:blue;">60%</span></td>
+	<td><span style="color:blue;">60 g</span></td>
+	<td><span style="color:blue;">16,7</span></td>
+</tr>
+
+<tr>
+	<td><span style="color:red;">Liídeos</span></td>
+	<td><span style="color:red;">25%</span></td>
+	<td><span style="color:red;">25 g</span></td>
+	<td><span style="color:red;">37,3</span></td>
+</tr>
+</table><br>
+<p>
+Temos:<br>
+E alimento = <span style="color:green;">E proteínas</span> +
+<span style="color:blue;">E carboidratos</span> + <span style="color:red;">E lipídeos</span><br>
+E alimento = <span style="color:green;">15g x 16,7 KJ/g</span> +
+<span style="color:blue;">60g x 16,7 KJ/g</span> + <span style="color:red;">25g x 37,3 KJ/g</span><br>
+E alimento = <span style="color:green;">250,5</span> +
+<span style="color:blue;">1.002</span> + <span style="color:red;">932,5</span><br>
+E alimento = 2.185 KJ ou E alimento =522,73 Kcal
+<br>
+Para essa quantidade de alimento o seu valor energético será de
+2.185 KJ ou 522,72 Kcal. Para uma quantidade maior de
+energia será necessário uma quantidade maior do alimento.
+</p>
+<CENTER><input type="submit" id="fechar" onclick="fdExit()" value="F E C H A R"> <br></CENTER>
+</div>
+<section id="Quitanda" class="Rotation">
+	<div id="avisoQuitanda">
+		<b style="font-size:100%;"> Selecione 3 tipos de alimentos ricos em carboidratos, 2 ricos em proteínas e 2 ricos em lipídios. Em seguida, clique no dado.</b>
+	</div>
+	<div id="selecaoQuitanda">
+		<img src="Imgs/Quitanda.png">
+
+		<!-- fileira 1 Proteina -->
+		<button title="Carne de frango" onclick="SelecionarQuitanda(0, Vez,'frango')" style="height:10%; width:5.5%; background:transparent;border:1px solid #000; position:absolute; top:54%; left:3.5%;"></button>
+		<button title="Queijo" onclick="SelecionarQuitanda(0, Vez,'queijo')" style="height:10%; width:8%; background:transparent;border:1px solid #000; position:absolute; top:56%; left:11%;"></button>
+		<button title="Ovo" onclick="SelecionarQuitanda(0, Vez,'ovo')" style="height:10%; width:4.5%; background:transparent;border:1px solid #000; position:absolute; top:56%; left:19.2%;"></button>
+		<button title="Carne de Boi" onclick="SelecionarQuitanda(0, Vez,'boi')"  style="height:12%; width:8%; background:transparent;border:1px solid #000; position:absolute; top:54%; left:24%;"></button>
+
+		<!-- fileira 2 Proteina -->
+		<button title="Leite" onclick="SelecionarQuitanda(0, Vez,'leite')" style="height:14%; width:5%; background:transparent;border:1px solid #000; position:absolute; top:70%; left:5%;"></button>
+		<button title="Iogurte" onclick="SelecionarQuitanda(0, Vez,'iogurte')" style="height:12%; width:9%; background:transparent;border:1px solid #000; position:absolute; top:71%; left:11.5%;"></button>
+		<button title="Peito de Peru" onclick="SelecionarQuitanda(0, Vez,'peru')" style="height:11%; width:8%; background:transparent;border:1px solid #000; position:absolute; top:72%; left:22%;"></button>
+
+		<!-- fileira 1 Gordura -->
+		<button title="Manteiga" onclick="SelecionarQuitanda(2, Vez,'manteiga')" style="height:10%; width:7%; background:transparent;border:1px solid #000; position:absolute; top:54%; left:69.5%;"></button>
+		<button title="Margarina" onclick="SelecionarQuitanda(2, Vez,'margarina')" style="height:9%; width:7%; background:transparent;border:1px solid #000; position:absolute; top:55%; left:77%;"></button>
+		<button title="Castanha" onclick="SelecionarQuitanda(2, Vez,'castanha');" style="height:9%; width:8%; background:transparent;border:1px solid #000; position:absolute; top:55%; left:84.5%;"></button>
+		<button title="Maionese" onclick="SelecionarQuitanda(2, Vez,'maionese')" style="height:9%; width:6%; background:transparent;border:1px solid #000; position:absolute; top:56%; left:93%;"></button>
+
+		<!-- fileira 2 Gordura -->
+		<button title="Óleos vegetais" onclick="SelecionarQuitanda(2, Vez,'azeite')" style="height:15%; width:6%; background:transparent;border:1px solid #000; position:absolute; top:70%; left:69%;"></button>
+		<button title="Pasta de amendoin" onclick="SelecionarQuitanda(2, Vez,'amedoin')" style="height:10%; width:9%; background:transparent;border:1px solid #000; position:absolute; top:72%; left:78%;"></button>
+		<button title="Abacate" onclick="SelecionarQuitanda(2, Vez,'gvh')" style="height:15%; width:6%; background:transparent;border:1px solid #000; position:absolute; top:70%; left:91%;"></button>
+
+		<!-- fileira 1 Carboidrato -->
+		<button title="Pão francês" onclick="SelecionarQuitanda(1, Vez,'pao')" style="height:11%; width:9%; background:transparent;border:1px solid #000; position:absolute; top:35%; left:35%;"></button>
+		<button title="Arroz" onclick="SelecionarQuitanda(1, Vez,'arroz')" style="height:10%; width:6%; background:transparent;border:1px solid #000; position:absolute; top:36%; left:44.2%;"></button>
+		<button title="Macarrão" onclick="SelecionarQuitanda(1, Vez,'macarrao')" style="height:8%; width:6%; background:transparent;border:1px solid #000; position:absolute; top:38%; left:51%;"></button>
+		<button title="Feijão" onclick="SelecionarQuitanda(1, Vez,'feijao')" style="height:10%; width:7%; background:transparent;border:1px solid #000; position:absolute; top:37%; left:58%;"></button>
+
+		<!-- fileira 2 Carboidrato -->
+		<button title="Cereal" onclick="SelecionarQuitanda(1, Vez,'cereal')" style="height:16.2%; width:7%; background:transparent;border:1px solid #000; position:absolute; top:50%; left:36%;"></button>
+		<button title="Batata Doce" onclick="SelecionarQuitanda(1, Vez,'batata')" style="height:12%; width:9%; background:transparent;border:1px solid #000; position:absolute; top:53%; left:45%;"></button>
+		<button title="Milho" onclick="SelecionarQuitanda(1, Vez,'milho')" style="height:13%; width:8%; background:transparent;border:1px solid #000; position:absolute; top:51%; left:57%;"></button>
+
+		<!-- 3 fileira Carboidrato -->
+		<button title="Massa de lasanha" onclick="SelecionarQuitanda(1, Vez,'lasanha')" style="height:10%; width:11%; background:transparent;border:1px solid #000; position:absolute; top:74%; left:35%;"></button>
+		<button title="Mandioca frita" onclick="SelecionarQuitanda(1, Vez,'mandioca')" style="height:10%; width:8%; background:transparent;border:1px solid #000; position:absolute; top:74%; left:47%;"></button>
+		<button title="Torrada integral" onclick="SelecionarQuitanda(1, Vez,'torrada')" style="height:13%; width:8%; background:transparent;border:1px solid #000; position:absolute; top:72%; left:57%;"></button>
+		
+		<b id="Mark01" style="position:absolute; top:90%; left: 17%;">0</b>
+		<b id="Mark02" style="position:absolute; top:90%; left: 50%;">0</b>
+		<b id="Mark03" style="position:absolute; top:90%; left: 83%;">0</b>
+	
+	</div>
+	<div id="tableQuitanda">
+		<table border="1px">
+			<tr>
+				<td>Dado</td>
+				<td>Gramas(g)</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>100g</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>200g</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>300g</td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>400g</td>
+			</tr>
+			<tr>
+				<td>5</td>
+				<td>500g</td>
+			</tr>
+			<tr>
+				<td>6</td>
+				<td>600g</td>
+			</tr>
+		</table>
+	</div>
+	<div id="calculoQuitanda">
+		<div class="calculos" style="text-align:center; margin-top:10%;">
+			<b>CALCULO - TOTAL</b> 
+		</div>
+		<div class="calculos" style="margin-top:2%;">
+			<b style="margin-left:10%;">Carboidrato:</b> <B style="margin-left:1%;" id="Id_Carbo">X</B>
+		</div>
+		<div class="calculos">
+			<b style="margin-left:10%;">Lipídios:</b> <B style="margin-left:1%;" id="Id_Lip">X</B>
+		</div>
+		<div class="calculos">
+			<b style="margin-left:10%;">Proteínas:</b> <B style="margin-left:1%;" id="Id_Prot">X</B>
+		</div>
+		<hr color="#262626" width="80%"/>
+		<div class="calculos" style="text-align:center;">
+			<b style="font-size:100%; margin-top:0;"> Total (Kcal)-</b> <B style="margin-left:1%;" id="Id_Tot">X</B>
+		</div>
+		<button id="DadoKit" onclick="DadoQuit()"/>
+	</div>
+</section>
+
+<!-- Saco de Exercicio -->
+
+<section id="Exercicio" class="Rotation">
+	<div id="tituloExercicio">
+		<p style="margin-top:1%; font-size:165%;" >&ensp; S A C O &ensp; D E &ensp; E X E R C Í C I O &ensp; </p>
+	</div>
+	<section id="perguntaExercicio">
+		<p id="PergEx" style="text-align:justify;font-size:108%;position:relative;">&ensp; &ensp; &ensp;</p>
+	</section>
+	<section id="escolhaExercicio"> 
+		<span style="font-size:108%;position:relative;margin-left:5%;margin-top:5%">E S C O L H A -</span>
+		<button id="NomeJgdr1" onClick="SelecionarJg(1)" style="position:relative;padding:8px;margin-left:5%;margin-top:1.5%;margin-bottom:1.5%;font-size:100%;">Jogador 1</button>
+		<button id="NomeJgdr2" onClick="SelecionarJg(2)" style="position:relative;padding:8px;margin-left:5%;margin-top:1.5%;margin-bottom:1.5%;font-size:100%;">Jogador 2</button>
+		<button id="NomeJgdr3" onClick="SelecionarJg(3)" style="position:relative;padding:8px;margin-left:5%;margin-top:1.5%;margin-bottom:1.5%;font-size:100%;">Jogador 3</button>
+		<button id="NomeJgdr4" onClick="SelecionarJg(4)" style="position:relative;padding:8px;margin-left:5%;margin-top:1.5%;margin-bottom:1.5%;font-size:100%;">Jogador 4</button>
+	</section>
+
+<section id="tableExercicio">
+	<img src="Imgs/test.gif" style="position:absolute; display:block; left:3%;top:20%; max-height:80px; max-width:80px;">
+	<table style="position:relative;display:table;height:55%;width:15%;margin:0 auto;top:10%;">
+		<tr>
+			<td>Dado</td>
+			<td>Tempo(min)</td>
+			<td>|</td>
+			<td>Dado</td>
+			<td>Tempo(min)</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>30</td>
+			<td>|</td>
+			<td>4</td>
+			<td>60</td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td>40</td>
+			<td>|</td>
+			<td>5</td>
+			<td>70</td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td>50</td>
+			<td>|</td>
+			<td>6</td>
+			<td>80</td>
+		</tr>
+	</table>
+<p id="resultadoExercicio" style="font-size:100%;font-weight: bold; display:block; position:relative; top:2%; width:100%; text-align:center;"> Perdeu Xxx calorias.</p>
+
+<button id="DadoEx" onclick="DadoExerc(Vez)"/>
+</section>
+</section>
+
+<section id="thermo" class="Rotation">
+<h3 onclick="thermoFechar()">Fechar</h3>
+<h1 style="text-align:center; font-size:125%;">O que é o THERMO10?</h1>
+<p style="text-align:justify; font-size:110%;">
+É um jogo digital elaborado com finalidade de auxiliar os professores e
+os alunos, principalmente da educação básica, de forma lúdica e prazerosa nos
+processos de ensino-aprendizagem em sala de aula, dos conceitos
+relacionados à Termoquímica. </br></br>
+Ele procura trabalhar os conceitos de calor e temperatura, tidos como
+abstratos, que são fundamentais para que o educando compreenda de modo
+significativo os processos termoquímicos endotérmicos e exotérmicos.
+Esses conceitos são de grande relevância, uma vez que tem dimensão
+interdisciplinar, sendo visto nas ciências exatas, biológicas e engenharias, além
+de estar presente no dia a dia dos alunos.</br></br>
+O jogo digital TRERMO10 procura apresentar de forma lúdica os
+conceitos relacionados à absorção (processos endotérmicos) e liberação
+(processos exotérmicos) de energia.</br></br>
+Ao buscar o engajamento do aluno nas situações de aprendizagem;
+possibilita a mediação entre o real e o imaginário, a construção do
+conhecimento e a evolução do pensamento, desperta a curiosidade, permite a
+imaginação e a invenção, a busca da afetividade, a produção de significações,
+a decodificação do contexto, a aquisição de conceitos, a solução de problemas
+e o desenvolvimento pessoal, social e cultural do aluno e a motivação adquire o
+sentido de elemento constituidor e constituinte das ultrapassagens necessárias
+à apreensão dos conceitos científicos na rede de significados de cada
+indivíduo.</p><br>
+
+<h1 style="text-align:center; font-size:125%;">Créditos</h1>
+<p style="text-align:justify; font-size:113%;">
+Este jogo é o Produto Educacional desenvolvido no Mestrado Profissional em Química em Rede Nacional (PROFQUI) por AFONSO FEITOSA REIS FILHO, sob a orientação dos professores Marcelo B. Carneiro Leão e Bruno Silva Leite.
+<br><br>Equipe de Desenvolvimento: Almir, Paulo, Walter, Karine, Gabriel, Ryan, Raquel, Fernanda, Lucas e Richard.
+<br><br>Finalizadores: Almir e Paulo.<br><br>
+Apoio Técnico: Rosiberto.<br><br>
+Apoio Institucional: LEUTEQ (www.leuteq.ufrpe.br) e Núcleo SEMENTE.<br>
+Instituição Associada: Universidade Federal Rural de Pernambuco - UFRPE.
+</p>
+
+</section>
+
+<!--Manual de Instruções-->
+
+<section id="regras" class="Rotation">
+<h3 onclick="RemoveRegras()">Fechar</h3>
+<h1 style="text-align:center; font-size:156%;">Instruções Thermo10</h1>
+
+<ol>
+<li>&#9673; Cada jogador possui 3 peões da mesma cor: dois na base (<img style="height:40px;width:40px;" src="Imgs/imgReg/Figura 1_base.png">) e um em jogo, na versão completa e na versão rápida apenas um peão em jogo.</li>
+<li>&#9673; O tabuleiro está composto de 68 casas numeradas, sendo 4 seguras (marcadas por modelo atômico), por onde podem se deslocar qualquer peão.</li>
+<li>&#9673; Além disso, cada jogador dispõe de 5 casas de chegada e uma meta (<img style="height:30px;" src="Imgs/imgReg/Figura 2_meta.png">) (a de maior tamanho de formato pontiagudo, estando localizada no centro do tabuleiro) marcadas com a cor correspondente ao peão de cada jogador, em que só ele pode se deslocar.</li>
+<li>&#9673; Para assinalar a resposta do Quiz utilize as alternativas localizadas na barra (<img style="height:30px;" src="Imgs/imgReg/Figura 3_alternativas.png">) que fica posicionada na parte inferior do tabuleiro central.</li>
+</ol>
+
+<h2>Objetivo</h2>
+<ol>
+<li>&#9673; Versão completa: conseguir levar, antes que os adversários, os 3 peões da Base à Meta, passando por todo o tabuleiro e ter uma maior quantidade de quilocalorias (Kcal).</li>
+<li>&#9673; Versão rápida: conseguir levar, antes que os adversários, o peão da Base à Meta, passando por todo o tabuleiro e ter uma maior quantidade de quilocalorias (Kcal).</li>
+</ol>
+
+<h1 style="text-align:center; font-size:156%;">Regras do Thermo10</h1>
+
+<h2>Como jogar</h2>
+
+<h2>Versão Completa</h2>
+<ol>
+<li>&#9673; Todos os jogadores começam o jogo com 3 peões, sendo 2 peões na base (<img style="height:40px;width:40px;" src="Imgs/imgReg/Figura 1_base.png">) e 1 em jogo situado na sua casa de início correspondente. </li>
+<li>&#9673; O jogo escolhe automaticamente de forma aleatória o jogador que irá acionar o dado primeiro.</li>
+<li>&#9673; Para iniciar o jogo é preciso clicar no dado com a cor correspondente do jogador, o número retirado no dado será o número de casas avançadas.</li>
+<li>&#9673; Se o número do dado corresponder a um dos valores 1, 2, 3, 4 ou 6, o jogador deverá acionar o botão andar (<img style="height:30px;" src="Imgs/imgReg/Figura 4_andar.png">) e na sequência escolher o peão de número 1 (<img src="Imgs/imgReg/Figura 6_peao_1.png">) para que ele ande pelas casas. Caso o número do dado seja 5 (<img style="height:40px;width:40px;" src="Imgs/imgReg/Figura 9_Dado 5.png">) será possível andar com o peão 1 clicando no botão andar (<img style="height:30px;" src="Imgs/imgReg/Figura 4_andar.png">) ou sair com os peões 2 e 3 (<img src="Imgs/imgReg/Figura 7_peao_2 e 3.png">). Para isso o jogador deve clicar no botão sair (<img style="height:30px;" src="Imgs/imgReg/Figura 5_sair.png">) e escolher qual peão irá sair da base. </li>
+<li>&#9673; Para sair da base com um peão é preciso que o jogador tire o número 5 no dado (<img style="height:40px;width:40px;" src="Imgs/imgReg/Figura 9_Dado 5.png">). Quando isto acontecer o jogador deve clicar no botão sair (<img style="height:30px;" src="Imgs/imgReg/Figura 5_sair.png">) e escolher o peão que está na base. Esta ação estará ativa enquanto existirem peões na base do jogador.</li>
+<li>&#9673; Ao sair da base cada peão adiciona 100 calorias ao jogador e ganha 20 calorias a cada casa que avança.</li>
+<li>&#9673; Se todos os peões estiverem nas casas, o jogador deve selecionar a opção andar (<img style="height:30px;" src="Imgs/imgReg/Figura 4_andar.png">) e escolher um dos peões (<img style="height:30px;" src="Imgs/imgReg/Figura 8_peoes.png">) para que ele se movimente. </li>
+<li>&#9673; Caso o peão de um dos jogadores seja capturado por um peão de outro jogador, o peão retornará para a base e a opção sair será ativada novamente. </li>
+</ol>
+
+<h2>Versão Rápida</h2>
+<ol>
+<li>&#9673; Todos os jogadores começam com um peão em jogo situado na sua casa de início.</li>
+<li>&#9673; O jogo escolhe automaticamente de forma aleatória o jogador que irá acionar o dado primeiro. </li>
+<li>&#9673; Para iniciar o jogo é preciso clicar no dado com a cor correspondente do jogador, o número retirado no dado será o número de casas avançadas. Para isso ocorrer o jogador deverá acionar o botão andar (<img style="height:30px;" src="Imgs/imgReg/Figura 4_andar.png">).</li>
+<li>&#9673; Caso o peão de um dos jogadores seja capturado por um peão de outro jogador, o peão capturado retornará a sua respectiva base. Para o peão sair da base é preciso que o jogador tire o número 5 no dado (<img style="height:40px;width:40px;" src="Imgs/imgReg/Figura 9_Dado 5.png">). Quando isto acontecer o jogador deve clicar no botão sair (<img style="height:30px;" src="Imgs/imgReg/Figura 5_sair.png">).</li>
+<li>&#9673; Ao sair da base cada peão adiciona 100 calorias ao jogador e ganha 20 calorias a cada casa que avança.</li>
+</ol>
+
+<h2>Capturas</h2>
+<ol>
+<li>&#9673; O jogador que capturar um peão ganhará 400 calorias e o capturado perde 200 calorias e retorna a sua respectiva base.</li>
+<li>&#9673; Para capturar um peão de um adversário, basta cair na mesma casa que ele, desde que não seja uma das casas seguras (<img src="Imgs/imgReg/Figura 12_CasaSegura.png">).</li>
+</ol>
+
+<h2>Chegada à meta (<img style="height:25px;" src="Imgs/imgReg/Figura 11_CasaMeta.png">)</h2>
+<ol>
+<li>&#9673; Se um peão conseguiu dar a volta completa ao tabuleiro poderá entrar na meta. Para conseguir introduzir um peão na casa de meta o jogador deverá tirar o número exato no dado; se não tirar o número exato o peão rebota (retorna) as casas de chegada. </li>
+<li>&#9673; A quantidade de casas que o peão irá rebotar (retornar) será sempre igual à quantidade que exceder ao valor exato para o peão chegar à meta. Exemplo: o valor exato para o peão chegar à meta é igual a dois e dado marcar cinco, o excesso será igual a três, essa será a quantidade de casas que ele terá de retornar (rebotar).</li>
+<li>&#9673; Nas casas de chegada (<img style="height:25px;" src="Imgs/imgReg/Figura 10_CasasChegada.png">), um peão não poderá ser capturado pelo adversário.</li>
+<li>&#9673; Se um peão chega à meta (<img style="height:25px;" src="Imgs/imgReg/Figura 11_CasaMeta.png">), o jogador ganha 1500 quilocalorias (Kcal).</li>
+</ol>
+
+<h2>Término do Jogo</h2>
+<ol>
+<li>&#9673; Na versão completa o jogo termina quando um dos jogadores consegue colocar todos os seus peões na meta; a partir daí é feita contagem de quilocalorias e é declarado vencedor aquele jogador que acumulou a maior quantidade de quilocalorias (Kcal). </li>
+<li>&#9673; Na versão rápida, se o peão de um dos jogadores chega à meta, o jogador ganha 1500 quilocalorias o jogo termina e é declarado vencedor aquele jogador que acumulou a maior quantidade de quilocalorias (Kcal).</li>
+</ol>
+
+<h2>Como Iniciar um Novo Jogo</h2>
+<ol>
+<li>&#9673; Para iniciar um novo jogo após o término de uma rodada ou reiniciar durante o jogo é preciso acionar a tecla F5 nos aparelhos Desktops ou Notebooks e nos dispositivos móveis basta acionar o botão atualizar.</li>
+</ol>
+
+<h2>Sobreposição de peões</h2>
+<ol>
+<li>&#9673; <strong style="font-size:108%;">Situação 1:</strong> Se na casa de segurança (<img src="Imgs/imgReg/Figura 12_CasaSegura.png">) estiverem dois peões de jogadores diferentes, o peão passará a ter contorno branco, enquanto perdurar essa situação.</li>
+<li>&#9673; <strong style="font-size:108%;">Situação 2:</strong> Se em qualquer casa estiverem mais de um peão da mesma cor, o peão passará a ter contorno preto, enquanto perdurar essa situação.</li>
+</ol>
+
+<h2>Extras</h2>
+<ol>
+<li><img src="Imgs/imgCasaEsp/quitanda.png"/> <b style="font-size:125%;" >Quitanda:</b> São casas acionadas quando o jogador estiver sobre elas. É formada por
+grupos de alimentos que ele deverá selecionar conforme a instrução, joga-se
+o dado para determinar a quantidade total de gramas, que serão
+distribuídas da seguinte forma, no cálculo das quilocalorias: 60% de
+carboidratos, 25% de lipídeos e 15% de proteínas (valores percentuais
+médios recomendados pelo Ministério da Saúde e pela Organização Mundial
+de Saúde para os três grupos alimentares). As quilocalorias serão
+adicionadas ao jogador.</li>
+
+<li><img src="Imgs/imgCasaEsp/sacodeexercicio.png"/> <b style="font-size:125%;">Saco de exercício:</b> Exercícios físicos práticos. Escolhe-se um dos adversários para fazer os exercícios, que irá perder quilocalorias de acordo com o tempo de duração do exercício determinado pelo dado. São 11 exercícios práticos diferentes que são selecionados de forma aleatória quando o jogador está nessa casa.</li>
+
+<li><img src="Imgs/imgCasaEsp/quiz.png"/> <b style="font-size:125%;">Quiz (Pergunta, desafio, charada):</b> O jogador irá responder as perguntas. Se acertar ganha 1200 quilocalorias. Caso erre ou não responda até 3 minutos, perderá 300 quilocalorias. Se o jogador acionar o botão de ajuda existente na pergunta e acertar a questão ele ganhará 600 quilocalorias. No total são 60 perguntas que são selecionadas de forma aleatória.</li>
+
+<li><img src="Imgs/imgCasaEsp/dicas.png"/> <b style="font-size:125%;">Dicas:</b> Auxiliam os jogadores para terem um conhecimento prévio para responder às possíveis perguntas.São 21 dicas que aparecem durante o jogo de forma aleatória quando o peão está nessa casa.</li>
+
+<li><img src="Imgs/imgCasaEsp/seguranca.png"/> <b style="font-size:125%;">Casa de segurança:</b> Nesta casa os peões não podem ser capturados.</li>
+</ol>
+</section>
+
+<!--Nome Dos Jogadores-->
+
+<section id="Left_Player" >
+	<div class="positionTabela">
+		<table id="jogadorOne" cellspacing="1" class="Rotation">
+			<tr>
+				<th class="nome" colspan="2" style="background-color:#027D02;"><p id="JG1" maxlength="21">Jogador 1</p></th>
+			</tr>
+			<tr>
+				<td class="maior">Kcal</td>
+				<td class="pontos"> <p id="pontuacaoOne"> 0 </p></td>
+			</tr>
+		</table>
+	</div>
+	<div class="positionTabela">
+		<table	id="jogadorThree" cellspacing="1">
+			<tr>
+				<th class="nome" colspan="2" style="background-color:#9C9C00;"><p id="JG3" maxlength=21>Jogador 3</p></th>
+			</tr>
+			<tr>
+				<td class="maior">Kcal</td>
+				<td class="pontos"> <p id="pontuacaoThree">0</p></td>
+			</tr>
+		</table>
+	</div>
+</section>
+<section id="Right_Player"> 
+	<div class="positionTabela">
+		<table	id="jogadorTwo" cellspacing="1" class="Rotation">
+			<tr>
+				<th style="background-color:#A60303;" colspan="2" class="nome"> <p id="JG2" maxlength=21 >Jogador 2</p></th>
+			</tr>
+			<tr>
+				<td class="maior">Kcal</td>
+				<td class="pontos"> <p id="pontuacaoTwo"> 0 </p></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="positionTabela">
+		<table	id="jogadorFour" cellspacing="1">
+			<tr>
+				<th class="nome" colspan="2" style="background-color:#000085;"> <p id="JG4" maxlength=21>Jogador 4</p></th></tr>
+			<tr>
+				<td class="maior">Kcal</td>
+				<td class="pontos"> <p id="pontuacaoFour"> 0 </p> </td>
+			</tr>
+		</table>
+	</div>
+</section>
+<!--dado-->
+<section id="LancaDado">
+	<button id="Dado" onclick="Dado()"/>
+</section>
+
+<!--Game-->
+
+<section id="Principal"><!--Canvas-->
+<!--<img width="100%" src="Imgs/Tab.png">-->
+<!-- X dos jogadores-->
+<p id="X1">X</p>
+<p id="X2">X</p>
+<p id="X3">X</p>
+
+<p id="X4">X</p>
+<p id="X5">X</p>
+<p id="X6">X</p>
+
+<p id="X7">X</p>
+<p id="X8">X</p>
+<p id="X9">X</p>
+
+<p id="X10">X</p>
+<p id="X11">X</p>
+<p id="X12">X</p>
+<canvas id="Ludo" width="530%" height="503%"></canvas">
+</section>
+
+<!--Menu dos controles-->
+
+<section id="Controles" class="Rotation">
+<ul>
+		<li><button id="thermo10" onclick="thermoAbrir()" >T H E R M O 1 0  ?</button></li>
+		<li><button id="BtA" onclick="Respostas(1)">A</button></li>
+		<li><button id="BtB" onclick="Respostas(2)">B</button></li>
+		<li><button id="BtC" onclick="Respostas(3)">C</button></li>
+		<li><button id="BtD" onclick="Respostas(4)">D</button></li>
+		<li><button id="Instrucao" onclick="Regras()">I N S T R U Ç Õ E S</button></li>
+</ul>
+</section>
+
+<!--Mensagem Vencedor-->
+<div id="MensagemVencedor" class="Rotation">
+<h1 id="MsgVencedor"></h1> 
+<h1 id="Venceu"></h1>
+</div>
+
+<!--Botão para reiniciar o jogo-->
+<button id="Restart" onclick="restartGame()" class="Rotation">J O G A R &ensp; N O V A M E N T E</button>
+
+</body>
+
+</html>
