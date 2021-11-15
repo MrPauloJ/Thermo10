@@ -25,3 +25,8 @@ OBS: Projeto APK gerado pelo antigo phonegap, hoje cordova, criado e gerenciado 
 - Plataformas suportadas
   - Android (APK - Playstore)
   - Plataforma web / Navegadores web
+
+### Informações Gerais
+
+- POO apenas para os jogadores
+- Funções livres no código
